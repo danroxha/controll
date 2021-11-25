@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/starter_controll?createDatabaseIfNotExist=True
+    username: root
+    password: ''
+    # initialization-mode: always
+    # initialize: true
+    # data: file:src/main/resources/data.sql
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+  driver-class-name: com.mysql.jdbc.Driver
