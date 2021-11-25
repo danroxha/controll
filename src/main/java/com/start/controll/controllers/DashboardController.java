@@ -16,7 +16,7 @@ public class DashboardController {
   @RequestMapping
   public ModelAndView index(@AuthenticationPrincipal User user) {
     System.err.println(user.getRolesList());
-    return new ModelAndView("index") {{
+    return new ModelAndView("dashboard/index") {{
       addObject("user", user);
     }};
   }
