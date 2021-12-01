@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaft/layout"
+      layout:decorate="~{layout.html}"
+>
+<section layout:fragment="content" class="page-content-wrapper" >
+  <div class="card">
+    <div class="card-header">
+      <h1 class="h1">Adicionar Turma</h1>
+    </div>
+
+    <div class="card-body">
+      <div th:if="${message != null}" th:text="${message}" class="alert alert-secondary">
+      </div>
+      <form
+              th:action="@{/dashboard/starter/adicionar}"
+              th:object="${starter}"
+              method="POST"
+              enctype="multipart/form-data"
+      >
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{photo}" />
+
+        <div class="form-group mb-3">
+          <label for="name"> Nome</label>
+          <input th:field="*{name}" id="name" class="form-control" type="text" required placeholder="Nome da turma" />
+          <span style="font-weight: bold; font-style:italic; text-decoration: underline;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+
+        <div class="form-group row">
+          <div class="col mb-3">
+            <label for="code"> Codigo 4 letras </label>
+            <input th:field="*{code}" class="form-control" type="text" id="code" maxlength="4" minlength="4" placeholder="Adicione um código com 4 letras" data-input required>
+            <span style="font-weight: bold; font-style:italic; text-decoration: underline;"  th:if="${duplicateCodeError != null}" th:text="${duplicateCodeError}"></span>
+          </div>
+
+          <div class="col mb-3">
+            <label> Turma:</label>
+            <select class="form-select" th:field="*{startersProgram}">
+              <option th:each="prog : ${startersProgram}"  th:value="${prog.id}" th:text="${prog.name}" />
+            </select>
+            <span style="font-weight: bold; font-style:italic; text-decoration: underline;" th:if="${#fields.hasErrors('startersProgram')}" th:errors="*{startersProgram}"></span>
+          </div>
+          <div class="col mb-3">
+            <label>Foto </label>
+            <input class="form-control" type="file" name="image" accept="image/png, image/jpeg" />
+          </div>
+        </div>
+        <button class="btn btn-dark" type="submit" th:text="${starter.id == null} ? 'Adicionar' : 'Atualizar'">
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+</html>
