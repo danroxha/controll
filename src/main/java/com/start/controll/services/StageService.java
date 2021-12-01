@@ -3,13 +3,14 @@ package com.start.controll.services;
 import com.start.controll.entities.Stage;
 import com.start.controll.repositories.StageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class StateService {
+public class StageService {
 
   @Autowired
   private StageRepository stageRepository;
@@ -28,5 +29,9 @@ public class StateService {
 
   public List<Stage> createManyStage(List<Stage> stages) {
     return stageRepository.saveAll(stages);
+  }
+
+  public List<Stage> findAllStages() {
+    return stageRepository.findAll(Sort.by("name").ascending());
   }
 }

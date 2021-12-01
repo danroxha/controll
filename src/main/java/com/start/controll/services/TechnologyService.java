@@ -3,6 +3,7 @@ package com.start.controll.services;
 import com.start.controll.entities.Technology;
 import com.start.controll.repositories.TecnologyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,5 +29,24 @@ public class TechnologyService {
 
   public List<Technology> createManyTecnologies(List<Technology> technologies) {
     return tecnologyRepository.saveAll(technologies);
+  }
+
+  public Optional<Technology> findTechnologyById(Long id) {
+    return tecnologyRepository.findById(id);
+  }
+
+  public List<Technology> findAllTechnologies() {
+    return tecnologyRepository.findAll(Sort.by("name").ascending());
+  }
+
+  public Optional<Technology> deleteTechnologyById(Long id) {
+    var technology = findTechnologyById(id);
+
+    if(technology.isEmpty())
+      return Optional.empty();
+
+    tecnologyRepository.deleteById(id);
+
+    return technology;
   }
 }
