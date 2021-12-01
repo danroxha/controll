@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaft/layout"
+      layout:decorate="~{layout.html}"
+>
+<section layout:fragment="content" class="page-content-wrapper">
+    <div class="card" th:style="${(#lists.isEmpty(starters))} ? 'border-bottom: none;' : ''">
+        <div th:if="${message != null}" th:text="${message}" class="alert alert-secondary">
+        </div>
+
+        <div class="card-header d-flex justify-content-between">
+            <<h1 class="h1">Lista de Tecnologias</h1>
+            <section>
+                <a class="btn btn-secondary btn-lg" th:href="@{~/dashboard/tools/tecnologia/adicionar}" th:text="Adicionar"/>
+            </section>
+        </div>
+        <div class="card-body">
+            <div th:if="${#lists.isEmpty(technologies)}" class="d-flex justify-content-center row">
+                <img th:src="@{~/public/img/bankrupt.png}" style="width: 40%; max-width: 200px;"/>
+                <p class="h4 text-center"> Não há nada aqui</p>
+            </div>
+            <table th:if="${not #lists.isEmpty(technologies)}" class="table table-striped">
+                <thead>
+                <tr>
+                    <td>Nome</td>
+                    <td>Ação</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="technology : ${technologies}">
+                    <td th:text="${technology.name}" width="65%"/>
+                    <td>
+                        <a class="btn btn-secondary" th:href="@{~/dashboard/tools/tecnologia/editar(id=${technology.id})}"> Editar</a>
+                        <a class="btn btn-dark" th:href="@{~/dashboard/tools/tecnologia/excluir(id=${technology.id})}"> Excluir</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+</html>
