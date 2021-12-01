@@ -1,15 +1,14 @@
 package com.start.controll.configuration.database;
 
 import com.start.controll.entities.*;
+import com.start.controll.entities.Module;
 import com.start.controll.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Configuration
 public class PopulateDatabase {
@@ -21,10 +20,13 @@ public class PopulateDatabase {
   private TechnologyService technologyService;
 
   @Autowired
-  private StateService stateService;
+  private StageService stateService;
 
   @Autowired
   private StartersProgramService startersProgramService;
+
+  @Autowired
+  private ModuleService moduleService;
 
   @Autowired
   private StarterService starterService;
@@ -36,8 +38,8 @@ public class PopulateDatabase {
       return;
 
     technologyService.createManyTecnologies(Arrays.asList(
-      new Technology("java", "Java é uma linguagem de programação orientada a objetos desenvolvida na década de 90"),
-      new Technology("dotnet", ".net', '.NET é um framework livre e de código aberto para os sistemas operacionais Windows, Linux e macOS.")
+      new Technology("Java", "Java é uma linguagem de programação orientada a objetos desenvolvida na década de 90"),
+      new Technology(".NET", ".NET é um framework livre e de código aberto para os sistemas operacionais Windows, Linux e macOS.")
     ));
   }
 
@@ -59,14 +61,19 @@ public class PopulateDatabase {
     if(!startersProgramService.isEmptyStartsProgramRepository())
       return;
 
-    final Integer start = 2021 - 1900;
-    final Integer end = 2022 - 1900;
+    final Integer start = 2020 - 1900;
+    final Integer end = 2021 - 1900;
 
     startersProgramService.createManyProgram(List.of(
         new StartersProgram(
             "Turma A",
             new Date(start, Calendar.SEPTEMBER, 3),
             new Date(end, Calendar.FEBRUARY, 3)
+        ),
+        new StartersProgram(
+            "Turma B",
+            new Date(start + 1, Calendar.SEPTEMBER, 3),
+            new Date(end + 2, Calendar.FEBRUARY, 3)
         )
     ));
   }
@@ -77,20 +84,20 @@ public class PopulateDatabase {
     if(!starterService.isEmptyStartRepository())
       return;
 
-    var program = startersProgramService.findFirstProgram().get();
+    var startersProgram = startersProgramService.findFirstProgram().get();
 
     starterService.createManyStarters(List.of(
-        new Starter("Dianne May", "DMAY", program),
-        new Starter("Tim Miles", "TMLS", program),
-        new Starter("Carmen Cole", "CCLE", program),
-        new Starter("Juan West", "JWST", program),
-        new Starter("William Mccoy", "WMCC", program),
-        new Starter("Donald Chambers", "DCES", program),
-        new Starter("Eddie Carr", "EDCR", program),
-        new Starter("Cathy Duncan", "CDCA", program),
-        new Starter("Melissa Castro", "MCTR", program),
-        new Starter("Luis Carter", "LCTE", program),
-        new Starter("Terra Mason", "TMSN", program)
+        new Starter("Dianne May", "DMAY", startersProgram),
+        new Starter("Tim Miles", "TMLS", startersProgram),
+        new Starter("Carmen Cole", "CCLE", startersProgram),
+        new Starter("Juan West", "JWST", startersProgram),
+        new Starter("William Mccoy", "WMCC", startersProgram),
+        new Starter("Donald Chambers", "DCES", startersProgram),
+        new Starter("Eddie Carr", "EDCR", startersProgram),
+        new Starter("Cathy Duncan", "CDCA", startersProgram),
+        new Starter("Melissa Castro", "MCTR", startersProgram),
+        new Starter("Luis Carter", "LCTE", startersProgram),
+        new Starter("Terra Mason", "TMSN", startersProgram)
     ));
   }
 
@@ -102,7 +109,36 @@ public class PopulateDatabase {
 
     var users = userService.createManyUsers(
         new User("Clecio Gomes", "clecio.silva@gft.com", "Gft2021", "ADMIN"),
-        new User("Astrogildo Perrengue", "scm@example.com", "Gft2021", "SCRUM_MASTER")
+        new User("Astrogildo Perrengue", "astrogildo-scm@example.com", "Gft2021", "SCRUM_MASTER"),
+        new User("Martiano Luanova", "martiano-scm@example.com", "Gft2021", "SCRUM_MASTER")
     );
+  }
+
+  @Bean
+  public void populateModuleTable() {
+
+    if(!moduleService.isModuleRepositoryEmpty())
+      return;
+
+    var stages = stateService
+        .findAllStages()
+        .stream()
+        .limit(3)
+        .collect(Collectors.toList());
+
+    var modulesName = List.of("MVC - Estudo", "API - Estudo", "Testes - Estudo")
+        .stream()
+        .sorted()
+        .collect(Collectors.toList());
+
+    var modules = new ArrayList<Module>();
+
+    for(var i = 0; i < stages.size(); i++) {
+      modules.add(
+          new Module(modulesName.get(i), stages.get(i))
+      );
+    }
+
+    moduleService.createManyModules(modules);
   }
 }
