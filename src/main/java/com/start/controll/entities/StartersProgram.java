@@ -1,8 +1,7 @@
 package com.start.controll.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -10,11 +9,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class StartersProgram {
 
   @Id
@@ -27,20 +28,26 @@ public class StartersProgram {
   private String name;
 
   @Column(nullable = false)
-  @NotNull(message = "Data de inicio de programa deve ser uma data valida")
+  @NotNull(message = "Data de inicio da turma deve ser uma data válida")
   @Temporal(TemporalType.DATE)
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private Date begin;
 
   @Column(nullable = false)
-  @NotNull(message = "Data de fim do programa deve ser uma data valida")
+  @NotNull(message = "Data de fim da turma deve ser uma data valida")
   @Temporal(TemporalType.DATE)
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private Date end;
+
+  @OrderBy("name ASC")
+  @JsonIgnoreProperties("startersProgram")
+  @OneToMany(mappedBy = "startersProgram")
+  private List<Starter> starters;
 
   public StartersProgram(String name, Date begin, Date end) {
     this.name = name;
     this.begin = begin;
     this.end = end;
   }
+
 }

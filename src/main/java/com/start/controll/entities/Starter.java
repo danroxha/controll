@@ -1,20 +1,25 @@
 package com.start.controll.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 import static com.start.controll.configuration.Constant.EMPLOYEE_PHOTO_FOLDER;
 
+
 @Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class Starter {
 
   @Id
@@ -22,22 +27,28 @@ public class Starter {
   private Long id;
 
   @NotEmpty(message = "Nome do Starter não pode ser vazio")
-  @Length(max = 255, message = "Limite de 255 carateres  excedido no nome")
+  @Size(max = 255, message = "Limite de 255 carateres  excedido no nome")
   private String name;
 
   @Column(nullable = false, unique = true)
-  @Length(max = 4, min = 4, message = "Usuário deve ter examente 4 letras")
+  @Size(max = 4, min = 4, message = "Usuário deve ter examente 4 letras")
   @NotEmpty(message = "Usuário 4 letras do usuário não pode ser vazio")
   private String code;
 
   @Size(max = 255, message = "Nome da foto muito longo")
   private String photo;
 
+  @NotNull(message = "Turma do Starter não pode ser vazia")
   @ManyToOne
-  private StartersProgram  program;
+  @JsonIgnoreProperties("starters")
+  private StartersProgram  startersProgram;
 
-  @ManyToOne
-  private Group group;
+  @OneToMany(mappedBy = "starter", cascade = CascadeType.ALL)
+  private List<Project> projects;
+
+  @OneToMany(cascade = CascadeType.ALL)
+  private List<Daily> dailies;
+
 
   @Transient
   public String getPhotoURL() {
@@ -46,15 +57,15 @@ public class Starter {
     return String.format("%s/%s/%s", EMPLOYEE_PHOTO_FOLDER, id, photo);
   }
 
-
-  public Starter(String name, String code, StartersProgram program) {
+  public Starter(String name, String code, StartersProgram startersProgram) {
     this.name = name;
     this.code = code;
-    this.program = program;
+    this.startersProgram = startersProgram;
   }
 
-  public Starter(String name, String code, StartersProgram program, Group group) {
+  public Starter(String name, String code, StartersProgram program, GroupDaily daily) {
     this(name, code, program);
-    this.group = group;
+//    this.group = group;
   }
+
 }

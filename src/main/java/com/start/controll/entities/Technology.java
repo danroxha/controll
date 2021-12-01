@@ -1,15 +1,16 @@
 package com.start.controll.entities;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Technology {
@@ -20,16 +21,20 @@ public class Technology {
 
   @Column(nullable = false)
   @NotEmpty(message = "Nome da tecnologia não pode ser vazia")
-  private String nome;
+  @Size(max = 255, message = "Nome muito long")
+  private String name;
 
   @Column(nullable = false)
   @Lob
   @NotEmpty(message = "Descrição da tecnologia não pode ser vazia")
-  private String descricao;
+  private String description;
 
-  public Technology(String nome, String descricao) {
-    this.nome = nome;
-    this.descricao = descricao;
+//  @OneToMany
+//  private List<Group> groupList;
+
+  public Technology(String name, String description) {
+    this.name = name;
+    this.description = description;
   }
 }
 
