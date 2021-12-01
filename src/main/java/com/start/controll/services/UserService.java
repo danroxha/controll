@@ -1,6 +1,7 @@
 package com.start.controll.services;
 
 import com.start.controll.entities.User;
+import com.start.controll.exceptions.UserNotFound;
 import com.start.controll.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,5 +47,45 @@ public class UserService {
 
   public Boolean isRepositoryEmpty() {
     return userRepository.count() == 0;
+  }
+
+  public List<User> findAllScrumMaster() {
+    return userRepository.findAllScrumMasterUser();
+  }
+
+  public User enableOrDisableUser(Long id) throws UserNotFound {
+    var userSaved = userRepository.findById(id);
+
+    if(userSaved.isEmpty()) {
+      throw new UserNotFound();
+    }
+
+    var user = userSaved.get();
+
+    user.setActive(!user.getActive());
+
+    userRepository.save(user);
+
+    return user;
+  }
+
+  public User enableOrDisableUser(Long id, Boolean status) throws UserNotFound {
+    var userSaved = userRepository.findById(id);
+
+    if(userSaved.isEmpty()) {
+      throw new UserNotFound();
+    }
+
+    var user = userSaved.get();
+
+    user.setActive(status);
+
+    userRepository.save(user);
+
+    return user;
+  }
+
+  public List<User> findAllUsers() {
+    return userRepository.findAll();
   }
 }
