@@ -54,6 +54,10 @@ Use o ```mvnw``` para ambiente Linux e ```mvnw.cmd``` para Windows
     - login: martiano-scm@example.com
     - senha: Gft2021
     - tipo: SCRUM_MASTER
+  
+
+### SGBD
+Maria DB, com usuário ***root*** sem senha
 ```
 ./mvnw spring-boot:run
 ```
