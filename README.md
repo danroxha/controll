@@ -22,7 +22,7 @@ Criar um controle de Starter para GFT.
 - Enviar email automático para clecio.silva@gft.com sempre que um SM acessar a aplicação. (Neste caso sugiro criar um email fake para não ter que colocar senha de um email seu real)
 
 
-## Screenshort
+## Screenshot
 
 <p align="center">
     <img  width="350" src="screenshot/01.png" />
