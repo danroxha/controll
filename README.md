@@ -32,3 +32,13 @@ Criar um controle de Starter para GFT.
     <img  width="350" src="screenshot/05.png" />
     <img  width="350" src="screenshot/06.png" />
 </p>
+
+## :cd: Iniciar
+
+Na linha de comando:
+Use o ```mvnw``` para ambiente Linux e ```mvnw.cmd``` para Windows
+
+```
+./mvnw spring-boot:run
+```
+
