@@ -38,6 +38,22 @@ Criar um controle de Starter para GFT.
 Na linha de comando:
 Use o ```mvnw``` para ambiente Linux e ```mvnw.cmd``` para Windows
 
+
+## Usuários:
+- Clecio Gomes
+  - login: clecio.silva@gft.com
+  - senha: 
+  - tipo: ADMIN
+
+- Astrogildo Perrengue
+    - login: astrogildo-scm@example.com
+    - senha: Gft2021
+    - tipo: SCRUM_MASTER
+
+- Martiano Luanova
+    - login: martiano-scm@example.com
+    - senha: Gft2021
+    - tipo: SCRUM_MASTER
 ```
 ./mvnw spring-boot:run
 ```
