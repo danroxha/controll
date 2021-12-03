@@ -29,8 +29,8 @@ public class Technology {
   @NotEmpty(message = "Descrição da tecnologia não pode ser vazia")
   private String description;
 
-//  @OneToMany
-//  private List<Group> groupList;
+  @OneToMany(mappedBy = "technology")
+  private List<GroupDaily> groupList;
 
   public Technology(String name, String description) {
     this.name = name;

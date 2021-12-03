@@ -1,5 +1,6 @@
 package com.start.controll.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,12 +41,26 @@ public class Daily {
   @NotNull
   private Boolean presence;
 
-  @OneToMany
-  private List<Starter> starter;
+  @ManyToOne
+  @JsonIgnoreProperties({"projects", "dailies"})
+  private Starter starter;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.PERSIST)
+  @JsonIgnoreProperties("scrumMaster")
   private GroupDaily groupDaily;
-//
-//  @OneToOne
-//  private Module module;
+
+  @NotNull(message = "Módulo não pode ser vázio")
+  @ManyToOne
+  private Module module;
+
+  public Daily(Date date, String making, String done, String impediment, Boolean presence, Starter starter, GroupDaily groupDaily, Module module) {
+    this.date = date;
+    this.making = making;
+    this.done = done;
+    this.impediment = impediment;
+    this.presence = presence;
+    this.starter = starter;
+    this.groupDaily = groupDaily;
+    this.module = module;
+  }
 }

@@ -1,11 +1,13 @@
 package com.start.controll.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -23,8 +25,9 @@ public class Module {
   @OneToOne
   private Stage stage;
 
-//  @OneToMany
-//  private List<Daily> dailies;
+  @OneToMany(mappedBy = "module")
+  @JsonIgnoreProperties({"module"})
+  private List<GroupDaily> groupList;
 
   public Module(String name, Stage stage) {
     this.name = name;

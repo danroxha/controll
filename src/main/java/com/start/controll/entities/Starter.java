@@ -46,7 +46,8 @@ public class Starter {
   @OneToMany(mappedBy = "starter", cascade = CascadeType.ALL)
   private List<Project> projects;
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "starter")
+  @JsonIgnoreProperties({"groupDaily", "starters", "starter"})
   private List<Daily> dailies;
 
 
@@ -68,4 +69,8 @@ public class Starter {
 //    this.group = group;
   }
 
+  @Override
+  public String toString() {
+    return name;
+  }
 }

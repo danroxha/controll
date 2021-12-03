@@ -1,5 +1,6 @@
 package com.start.controll.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,8 +30,16 @@ public class RegisterDaily {
   private Date date;
 
   @ManyToOne
+  @JsonIgnoreProperties({"dailyGroup", "groupDaily", "starters"})
   private GroupDaily dailyGroup;
 
   @OneToMany(cascade = CascadeType.ALL)
+  @JsonIgnoreProperties({"starters", "groupDaily", "module"})
   private List<Daily> dailies;
+
+  public RegisterDaily(Date date, GroupDaily dailyGroup, List<Daily> dailies) {
+    this.date = date;
+    this.dailyGroup = dailyGroup;
+    this.dailies = dailies;
+  }
 }

@@ -1,5 +1,6 @@
 package com.start.controll.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -26,21 +27,32 @@ public class GroupDaily {
   private String name;
 
   @ManyToOne
+  @JsonIgnoreProperties({"technology", "groupList"})
   private Technology technology;
 
   @ManyToOne
+  @JsonIgnoreProperties({"username", "authorities", "starters", "dailies", "password",
+      "accountNonLocked", "accountNonExpired", "credentialsNonExpired", "roles", "active"
+  })
   private User scrumMaster;
 
   @ManyToMany
   @NotNull(message = "Selecione algum integrante")
+  @JsonIgnoreProperties({"dailies", "startersProgram", "starters", "projects", "photo"})
   private List<Starter> starters;
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "dailyGroup")
+  @JsonIgnoreProperties({"dailyGroup", "groupDaily", "module"})
+  @OrderBy("date DESC")
   private List<RegisterDaily> dailies;
 
   @LastModifiedDate
   @Temporal(TemporalType.TIMESTAMP)
   private Date lastModifiedDate;
+
+  @ManyToOne
+  @JsonIgnoreProperties({"module", "groupList"})
+  private Module module;
 
   @PrePersist
   @PreUpdate
@@ -48,5 +60,12 @@ public class GroupDaily {
     lastModifiedDate = new Date();
   }
 
+  public GroupDaily(String name, Technology technology, User scrumMaster, List<Starter> starters, Module module) {
+    this.name = name;
+    this.technology = technology;
+    this.scrumMaster = scrumMaster;
+    this.starters = starters;
+    this.module = module;
+  }
 }
 
