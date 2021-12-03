@@ -12,9 +12,14 @@ public class IndexController {
   @RequestMapping
   public ModelAndView index(@AuthenticationPrincipal User user) {
 
+    System.out.println(user);
+
     if(user == null)
       return new ModelAndView("redirect:/login");
 
-    return new ModelAndView("redirect:/dashboard");
+    if(user.getRolesList().contains("SCRUM_MASTER"))
+      return new ModelAndView("redirect:/dashboard/daily");
+
+    return new ModelAndView("redirect:/dashboard/tools");
   }
 }

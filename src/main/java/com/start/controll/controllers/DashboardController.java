@@ -10,14 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RestController
@@ -104,9 +102,9 @@ public class DashboardController {
     var technology =  technologyService.deleteTechnologyById(id);
 
     if(technology.isEmpty())
-      redirectAttributes.addFlashAttribute("Tecnologia com ID '%s' não pode ser removido");
+      redirectAttributes.addFlashAttribute("message", String.format("Tecnologia com ID '%s' não pode ser removido. Não foi encontrada ou há dependências no sistema", id));
     else
-      redirectAttributes.addFlashAttribute("Tecnologia '%s' foi removida", technology.get().getName());
+      redirectAttributes.addFlashAttribute("message", String.format("Tecnologia '%s' foi removida", technology.get().getName()));
 
     return new ModelAndView("redirect:/dashboard/tools/tecnologia");
   }
@@ -170,4 +168,22 @@ public class DashboardController {
     }};
   }
 
+  @RequestMapping("modulos/excluir")
+  public ModelAndView deleteModule(@RequestParam Long id, RedirectAttributes redirectAttributes) {
+
+    var module = moduleService.deleteModuleById(id);
+
+    if(module.isEmpty())
+      redirectAttributes.addFlashAttribute("message", String.format("Módulo com ID '%s' não pode ser removido. Não foi encontrada ou há dependências no sistema", id));
+    else
+      redirectAttributes.addFlashAttribute("message", String.format("Módulo '%s' foi removida", module.get().getName()));
+
+    return new ModelAndView("redirect:/dashboard/tools/modulos");
+  }
+
+  @RequestMapping("modulos/json")
+  @ResponseBody
+  public List<Module> allModules() {
+    return moduleService.findAllModules();
+  }
 }
