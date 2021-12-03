@@ -28,9 +28,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
+
       http.csrf().disable().authorizeRequests()
           .antMatchers("/dashboard/daily/**").hasAnyRole("ADMIN", "SCRUM_MASTER")
           .antMatchers("/dashboard/turma/json**").hasAnyRole("ADMIN", "SCRUM_MASTER")
+          .antMatchers("/dashboard/tools/usuarios/perfil/**").hasAnyRole("ADMIN", "SCRUM_MASTER")
           .antMatchers("/dashboard/**").hasRole("ADMIN")
           .antMatchers(HttpMethod.GET, "/").permitAll()
           .anyRequest().authenticated()

@@ -31,6 +31,9 @@ public class PopulateDatabase {
   @Autowired
   private StarterService starterService;
 
+  @Autowired
+  private GroupService groupService;
+
   @Bean
   void populateTechnologyTable() {
 
@@ -39,7 +42,8 @@ public class PopulateDatabase {
 
     technologyService.createManyTecnologies(Arrays.asList(
       new Technology("Java", "Java é uma linguagem de programação orientada a objetos desenvolvida na década de 90"),
-      new Technology(".NET", ".NET é um framework livre e de código aberto para os sistemas operacionais Windows, Linux e macOS.")
+      new Technology(".NET", ".NET é um framework livre e de código aberto para os sistemas operacionais Windows, Linux e macOS."),
+      new Technology("Lua", "Lua é uma linguagem de script poderosa, eficiente, leve e incorporável. Ele suporta programação procedural, programação orientada a objetos, programação funcional, programação orientada a dados e descrição de dados.")
     ));
   }
 
@@ -140,5 +144,49 @@ public class PopulateDatabase {
     }
 
     moduleService.createManyModules(modules);
+  }
+
+  @Bean
+  public void populateDailyGroup() {
+    if(!groupService.isGroupRepositoryEmpty())
+      return;
+
+    var starters = starterService
+        .findAllStarters()
+        .stream()
+        .limit(3)
+        .collect(Collectors.toList());
+
+    var java = technologyService.findTechnologyById(1L).get();
+    var dotnet = technologyService.findTechnologyById(2L).get();
+
+    var module = moduleService.findModuleById(1L).get();
+    var scrumMaster = userService.findUserByEmail("astrogildo-scm@example.com").get();
+
+    var group = groupService.createGroup(new GroupDaily(
+        "Grupo 1 - Java - Desafio MVC", java, scrumMaster,  starters, module
+    )).get();
+
+    groupService.createGroup(new GroupDaily(
+        "Grupo 2 - .NET - Desafio MVC", dotnet, scrumMaster,  starters, module
+    )).get();
+
+    var registers = group.getStarters().stream().map(starter -> new Daily(
+        new Date(), String.format("Fazendo + %s", starter.getId()),
+        String.format("Concluido + %s", starter.getId()),
+        String.format("Impedimento + %s", starter.getId()),
+        Boolean.TRUE,  starter, group,
+        module)
+    ).collect(Collectors.toList());
+
+    group.setDailies(
+        List.of(
+            new RegisterDaily(new Date(), group, registers)
+        )
+    );
+
+    groupService.updateOrCreateGroup(group);
+
+
   }
 }
