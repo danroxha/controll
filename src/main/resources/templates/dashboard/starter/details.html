@@ -16,7 +16,7 @@
         <section class="row card-body" style="display: flex;">
             <section class="col-4">
                 <img
-                    th:src="${starter.photoURL != null} ? '/'+ ${starter.photoURL} : '/public/img/default-user-icon.jpg' "
+                    th:src="${starter.photoURL != null and not #strings.isEmpty(starter.photo)} ? '/'+ ${starter.photoURL} : '/public/img/default-user-icon.jpg' "
                     th:alt="|Foto de ${starter.name}|" class="img-fluid"  style="max-width: 200px; width:100%;"/>
             </section>
             <section class="col">
@@ -42,8 +42,8 @@
                                 <span class="h3">Dailies</span>
                             </a>
 
-                            <a th:href="@{~/}">
-                                <img th:src="@{~/public/img/add.png}" width="37"  height="37" class="mx-2">
+                            <a>
+                                <img th:src="@{~/public/img/report.png}" width="37"  height="37" class="mx-2">
                             </a>
                         </h5>
                     </div>
@@ -53,6 +53,43 @@
                             <img th:src="@{~/public/img/bankrupt.png}" style="width: 40%; max-width: 100px;" />
                             <p class="h4 text-center"> Não há nada aqui</p>
                         </div>
+
+                        <details th:if="${not #lists.isEmpty(starter.dailies)}" th:each="daily : ${starter.dailies}" class="form-control table-responsive" >
+                            <summary>
+                                <button
+                                    th:class="${daily.presence} ? 'btn btn-secondary btn-sm' : 'btn btn-dark btn-sm'"
+                                    th:text="${daily.presence} ? 'Presente': 'Faltou'"
+                                    th:style="${not daily.presence} ? 'padding-left: 15px; padding-right: 15px': '' "
+                                    disabled
+                                />
+                                <span th:text="|${#dates.format(daily.date, 'dd/MM/yyyy')} - ${daily.groupDaily.name}|" />
+                            </summary>
+
+                            <table  class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <td>Fez</td>
+                                    <td>Planeja</td>
+                                    <td>Impedimento</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr >
+                                    <td>
+                                        <p th:text="${daily.done}"/>
+                                    </td>
+                                    <td>
+                                        <p th:text="${daily.making}"/>
+                                    </td>
+                                    <td>
+                                        <p th:text="${daily.impediment}"/>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </details>
+
+
                     </div>
                 </div>
             </div>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaft/layout"
+      layout:decorate="~{layout.html}"
+>
+<section layout:fragment="content" class="page-content-wrapper" >
+    <section class="card">
+
+        <div class="card-header d-flex justify-content-between">
+            <h1 th:text="${project.name}" />
+            <section>
+                <a class="btn btn-secondary btn-lg" th:href="@{~/dashboard/projetos/editar(id=${project.id})}" th:text="Editar"/>
+                <a class="btn btn-dark btn-lg" th:href="@{~/dashboard/projetos/excluir(id=${project.id})}" th:text="Excluir"/>
+            </section>
+        </div>
+        <div class="card-footer">
+            <ul>
+                <li><strong>Nota</strong>: [[${project.rating}]]</li>
+                <li><strong>Link</strong>: <a th:ref="${project.repository}">[[${project.repository}]]</a></li>
+                <li><strong>Módulo</strong>: [[${project.module.name}]]</li>
+            </ul>
+            <section>
+                <h2 class=" h3 mb-0">
+                    Descrição
+                </h2>
+                <p th:text="${project.description}"/>
+            </section>
+
+            <section>
+                <h2 class=" h3 mb-0">
+                    Observação
+                </h2>
+                <p th:text="${project.note}"/>
+            </section>
+
+        </div>
+    </section>
+
+</section>
+</html>

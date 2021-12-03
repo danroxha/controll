@@ -11,7 +11,7 @@
             <h1 class="h1">Lista de Usuários</h1>
             <section>
                 <a
-                  th:href="@{~/dashboard/tools/modulos/adicionar}"
+                  th:href="@{~/dashboard/tools/usuarios/adicionar}"
                   class="btn btn-secondary btn-sm" >
                     Cadastrar Usuário
                 </a>
@@ -26,14 +26,15 @@
                 <thead>
                 <tr>
                     <td>Nome</td>
+                    <td>Tipo</td>
                     <td>Ação</td>
                 </tr>
                 </thead>
                 <tbody>
                     <tr th:each="u : ${users}">
                         <td th:text="${u.name}" width="65%"/>
+                        <td th:text="${u.roles}" />
                         <td>
-<!--                            th:if="${user != null and #lists.contains(user.roles, 'ADMIN')}"-->
 
                             <a th:if="${not #lists.contains(u.roles, 'ADMIN')}"
                                th:text="${u.active} ? 'Desativar' : 'Ativar'"

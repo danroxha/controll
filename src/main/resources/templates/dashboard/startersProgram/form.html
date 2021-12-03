@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaft/layout"
+      layout:decorate="~{layout.html}"
+>
+<section layout:fragment="content" class="page-content-wrapper" >
+  <div class="card">
+    <div class="card-header">
+      <h1 class="h1">[[${startersProgram.id == null}? 'Adicionar Turma': 'Atualizar Turma' ]]</h1>
+    </div>
+
+    <div class="card-body">
+      <div th:if="${message != null}" th:text="${message}" class="alert alert-secondary">
+      </div>
+      <form
+              th:action="@{/dashboard/turma/adicionar}"
+              th:object="${startersProgram}"
+              method="POST"
+      >
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group mb-3">
+          <label for="name"> Nome</label>
+          <input th:field="*{name}" id="name" class="form-control" type="text" required placeholder="Nome da turma" />
+          <span style="font-weight: bold; font-style:italic; text-decoration: underline;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+
+        <div class="form-group row">
+          <div class="col mb-3">
+            <label for="begin"> Data de inicio: </label>
+            <input th:field="*{begin}" class="form-control" type="text" id="begin" placeholder="Por favor selecione uma data de inicio" data-input required>
+            <span style="font-weight: bold; font-style:italic; text-decoration: underline;" th:if="${#fields.hasErrors('begin')}" th:errors="*{begin}"></span>
+          </div>
+
+          <div class="col mb-3">
+            <label for="end"> Data de finalização: </label>
+            <input th:field="*{end}" class="form-control" type="text" id="end" placeholder="Por favor selecione uma data de encerramento" data-input required>
+            <span style="font-weight: bold; font-style:italic; text-decoration: underline;"  th:errors="*{end}"></span>
+          </div>
+        </div>
+        <button class="btn btn-dark" type="submit" th:text="${startersProgram.id == null} ? 'Adicionar' : 'Atualizar'">
+        </button>
+      </form>
+    </div>
+  </div>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script defer>
+        flatpickr("#begin", {
+            altInput: true,
+            altFormat: "j F, Y",
+            dateFormat: "Y-m-d"
+        });
+
+        flatpickr("#end", {
+            altInput: true,
+            altFormat: "j F, Y",
+            dateFormat: "Y-m-d"
+        });
+    </script>
+</section>
+
+
+</html>

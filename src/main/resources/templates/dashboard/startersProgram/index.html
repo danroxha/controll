@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaft/layout"
+      layout:decorate="~{layout.html}"
+>
+<section layout:fragment="content" class="page-content-wrapper" >
+    <div class="card">
+        <div class="card-header">
+            <h1 class="h1">Turmas</h1>
+        </div>
+        <div class="card-body">
+            <div class="card-group">
+                <div class="card text-center m-3">
+                    <a th:href="@{~/dashboard/turma/adicionar}" class="text-decoration-none text-dark">
+                        <img class="card-img-top mx-auto" th:src="@{~/public/img/add.png}" style="max-width: 100px; max-height: 200px;">
+                        <div class="card-body">
+                            <p class="card-text h2">Adicionar</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="card text-center m-3">
+                    <a th:href="@{~/dashboard/turma/listar}" class="text-decoration-none text-dark">
+                        <img class="card-img-top mx-auto" th:src="@{~/public/img/files.png}" style="max-width: 100px; max-height: 200px;">
+                        <div class="card-body">
+                            <p class="card-text h2">Listar</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</html>

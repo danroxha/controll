@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaft/layout"
+      layout:decorate="~{layout.html}"
+>
+<section layout:fragment="content" class="page-content-wrapper" >
+  <div class="card">
+    <div class="card-header">
+      <h1 class="h1">Registrar <i>Daily - [[${group.name}]]</i></h1>
+    </div>
+
+    <div class="card-body">
+      <div th:if="${message != null}" th:text="${message}" class="alert alert-secondary">
+      </div>
+      <form
+              th:action="@{~/dashboard/daily/grupos/registrar}"
+              th:object="${register}"
+              method="POST"
+      >
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" name="dailyGroup" th:value="${group.id}" />
+
+        <div class="col mb-3">
+          <label for="date"> Data </label>
+          <input th:field="*{date}" class="form-control" type="text" id="date" placeholder="Por favor selecione uma data para daily" data-input required>
+          <span style="font-weight: bold; font-style:italic; text-decoration: underline;" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div th:each="starter, status : ${group.starters}">
+
+              <input th:name="|dailies[__${status.index}__].groupDaily|" th:value="${group.id}" type="hidden"  />
+              <input th:name="|dailies[__${status.index}__].module|" th:value="${group.id}" type="hidden" />
+              <input th:name="|dailies[__${status.index}__].starter|" th:value="${starter.id}" type="hidden" />
+              <input th:name="|dailies[__${status.index}__].date|" type="hidden" class="date-hidden" />
+
+
+              <p class="h5" th:text="${starter.name}"/>
+              <div class="card-group">
+                <div class="card mb-3">
+                  <label > Fez</label>
+                  <textarea th:field="*{dailies[__${status.index}__].done}" class="form-control" type="text"></textarea>
+                </div>
+                <div class="card mb-3">
+                  <label> Planeja fazer</label>
+                  <textarea th:field="*{dailies[__${status.index}__].making}" class="form-control" type="text"></textarea>
+                </div>
+                <div class="card mb-3">
+                  <label> Impedimentos</label>
+                  <textarea th:field="*{dailies[__${status.index}__].impediment}" class="form-control" type="text" ></textarea>
+                </div>
+                <div class="card mb-3">
+                  <label th:for="|presense-${starter.id}|"> Presença</label>
+                  <input th:field="*{dailies[__${status.index}__].presence}" th:id="|presense-${starter.id}|" type="checkbox" value="true" />
+                </div>
+                <hr />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-dark" type="submit" th:text="${register.id == null} ? 'Salvar' : 'Atualizar'" />
+
+      </form>
+    </div>
+  </div>
+</section>
+<section layout:fragment="script">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script defer>
+        flatpickr("#date", {
+            altInput: true,
+            altFormat: "j F, Y",
+            dateFormat: "Y-m-d",
+            defaultDate: new Date()
+        });
+
+    </script>
+
+  <script defer>
+
+    var dates = {
+
+      html: {
+        mainDate: document.querySelector("#date"),
+        dates: document.querySelectorAll(".date-hidden")
+      },
+
+      addEventListener() {
+        this.html.mainDate.addEventListener('change', ({target}) => {
+          this.html.dates.forEach(date => {
+            date.value = target.value;
+            console.log(date.value);
+          });
+        });
+      },
+
+      setDefaultValues() {
+        this.html.dates.forEach(date => {
+          date.value =   this.html.mainDate.value
+        });
+      },
+
+      run() {
+         this.addEventListener();
+         this.setDefaultValues();
+      }
+    }
+
+    dates.run();
+
+  </script>
+</section>
+</html>
