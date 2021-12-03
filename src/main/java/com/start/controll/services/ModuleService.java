@@ -42,4 +42,18 @@ public class ModuleService {
   public Optional<Module> findModuleById(Long id) {
     return moduleRepository.findById(id);
   }
+
+  public Optional<Module> deleteModuleById(Long id) {
+    var module = findModuleById(id);
+
+    if(module.isEmpty())
+      return Optional.empty();
+
+    if(module.get().getGroupList().size() != 0)
+      return Optional.empty();
+
+    moduleRepository.deleteById(id);
+
+    return module;
+  }
 }

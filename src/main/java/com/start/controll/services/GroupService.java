@@ -25,6 +25,11 @@ public class GroupService {
     return Optional.ofNullable(groupRepository.save(group));
   }
 
+  public Optional<GroupDaily> updateOrCreateGroup(GroupDaily group) {
+    return createGroup(group);
+  }
+
+
   public List<GroupDaily> findAllGroups() {
     return groupRepository.findAll(Sort.by("lastModifiedDate").descending());
   }
@@ -51,5 +56,29 @@ public class GroupService {
     groupRepository.deleteById(id);
 
     return group;
+  }
+
+  public Optional<RegisterDaily> findRegisterById(Long id) {
+    return registerDailyRepository.findById(id);
+  }
+
+  public Optional<RegisterDaily> deleteRegisterById(Long id) {
+    var register = findRegisterById(id);
+
+    if(register.isEmpty())
+      return Optional.empty();
+
+    try {
+      registerDailyRepository.deleteById(id);
+    }
+    catch (Exception e) {
+      return Optional.empty();
+    }
+
+    return register;
+  }
+
+  public Boolean isGroupRepositoryEmpty() {
+    return groupRepository.count() == 0;
   }
 }

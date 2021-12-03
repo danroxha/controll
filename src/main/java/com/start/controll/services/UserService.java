@@ -1,9 +1,11 @@
 package com.start.controll.services;
 
+import com.start.controll.data.PasswordChange;
 import com.start.controll.entities.User;
 import com.start.controll.exceptions.UserNotFound;
 import com.start.controll.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,10 @@ public class UserService {
     }
 
     user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+    return Optional.ofNullable(userRepository.save(user));
+  }
+
+  public Optional<User> updateUser(User user) {
     return Optional.ofNullable(userRepository.save(user));
   }
 
@@ -86,6 +92,11 @@ public class UserService {
   }
 
   public List<User> findAllUsers() {
-    return userRepository.findAll();
+    return userRepository.findAll(Sort.by("roles")) ;
+  }
+
+  public Optional<User> updateUserPassword(User user, PasswordChange passwordChange) throws Exception {
+    user.setPassword(new BCryptPasswordEncoder().encode(passwordChange.getPassword()));
+    return updateUser(user);
   }
 }

@@ -45,6 +45,9 @@ public class TechnologyService {
     if(technology.isEmpty())
       return Optional.empty();
 
+    if(technology.get().getGroupList().size() != 0)
+      return Optional.empty();
+
     tecnologyRepository.deleteById(id);
 
     return technology;
