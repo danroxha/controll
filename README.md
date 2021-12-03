@@ -42,7 +42,7 @@ Use o ```mvnw``` para ambiente Linux e ```mvnw.cmd``` para Windows
 ## Usuários:
 - Clecio Gomes
   - login: clecio.silva@gft.com
-  - senha: 
+  - senha: Gft2021
   - tipo: ADMIN
 
 - Astrogildo Perrengue
