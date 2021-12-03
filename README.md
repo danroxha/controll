@@ -37,7 +37,9 @@ Criar um controle de Starter para GFT.
 
 Na linha de comando:
 Use o ```mvnw``` para ambiente Linux e ```mvnw.cmd``` para Windows
-
+```
+./mvnw spring-boot:run
+```
 
 ## Usuários:
 - Clecio Gomes
@@ -58,7 +60,5 @@ Use o ```mvnw``` para ambiente Linux e ```mvnw.cmd``` para Windows
 
 ### SGBD
 Maria DB, com usuário ***root*** sem senha
-```
-./mvnw spring-boot:run
-```
+
 
