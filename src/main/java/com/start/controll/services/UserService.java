@@ -99,4 +99,8 @@ public class UserService {
     user.setPassword(new BCryptPasswordEncoder().encode(passwordChange.getPassword()));
     return updateUser(user);
   }
+
+  public Optional<User> findUserById(Long id) {
+    return userRepository.findById(id);
+  }
 }

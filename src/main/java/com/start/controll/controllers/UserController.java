@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("dashboard/tools/usuarios")
@@ -74,15 +75,34 @@ public class UserController {
   }
 
   @RequestMapping("perfil")
-  public ModelAndView userProfile(@AuthenticationPrincipal User user) {
-    return new ModelAndView("dashboard/tools/user/profile.html") {{
-      addObject("user", user);
-      addObject("userDetails", user);
-    }};
+  public ModelAndView userProfile(
+      @AuthenticationPrincipal User user,
+      @RequestParam(required = false) Optional<Long> id
+  ) {
+
+    if(id.isEmpty()) {
+      return new ModelAndView("dashboard/tools/user/profile.html") {{
+        addObject("user", user);
+        addObject("userDetails", user);
+      }};
+    }
+
+    var userSaved =  userService.findUserById(id.get());
+
+    if(userSaved.isPresent()) {
+      return new ModelAndView("dashboard/tools/user/profile.html") {{
+        addObject("user", user);
+        addObject("userDetails", userSaved.get());
+      }};
+    }
+
+    return new ModelAndView("redirect:/dashboard/tools/usuarios");
+
   }
 
   @RequestMapping("perfil/senha")
   public ModelAndView userPasswordChange(@AuthenticationPrincipal User user) {
+
     return new ModelAndView("dashboard/tools/user/password.html") {{
       addObject("user", user);
       addObject("passwordChange", new PasswordChange());
