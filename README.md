@@ -19,7 +19,7 @@ Criar um controle de Starter para GFT.
 ### Exceeds
 - :heavy_check_mark: Cadastro de Empregado com foto.
 - :x: Criar um relatório mostrando quais Starters tem maior nota e menor nota.
-- :heavy_check_mark: Enviar email automático para clecio.silva@gft.com sempre que um SM acessar a aplicação. (Neste caso sugiro criar um email fake para não ter que colocar senha de um email seu real) (***[na branch send-email](https://git.gft.com/dlrv/desafio_mvc_11_2021/-/tree/send-email)***)
+- :heavy_check_mark: Enviar email automático para any-admin@sunny.com sempre que um SM acessar a aplicação. (Neste caso sugiro criar um email fake para não ter que colocar senha de um email seu real) (***[na branch send-email](https://github.com/dannRocha/controll/tree/send-email)***)
 
 
 ## Screenshot
