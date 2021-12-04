@@ -19,6 +19,10 @@ public class StageService {
     return Optional.ofNullable(stageRepository.save(stage));
   }
 
+  public Optional<Stage> saveStage(Stage stage) {
+    return createStage(stage);
+  }
+
   public Optional<Stage> updateOrCreateStage(Stage stage) {
     return createStage(stage);
   }
@@ -33,5 +37,30 @@ public class StageService {
 
   public List<Stage> findAllStages() {
     return stageRepository.findAll(Sort.by("name").ascending());
+  }
+
+  public List<Stage> findAllStage() {
+      return stageRepository.findAll();
+  }
+
+  public Optional<Stage> findStageById(Long id) {
+    return stageRepository.findById(id);
+  }
+
+  public Optional<Stage> deleteById(Long id) {
+    var stage = findStageById(id);
+    
+    if(stage.isEmpty())
+      return Optional.empty();
+
+       
+    if(!stage.get().getModules().isEmpty())
+      return Optional.empty();
+
+
+    stageRepository.deleteById(id);
+
+    return stage;
+
   }
 }

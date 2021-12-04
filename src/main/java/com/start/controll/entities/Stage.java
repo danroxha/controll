@@ -4,8 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Data
@@ -24,6 +28,10 @@ public class Stage {
   @Lob
   @NotEmpty(message = "Descrição da etapa não pode ser vazia")
   private String description;
+
+  @OneToMany(mappedBy = "stage")
+  @JsonIgnoreProperties({"stage", "groupList"})
+  private List<Module> modules;
 
   public Stage(String name, String description) {
     this.name = name;

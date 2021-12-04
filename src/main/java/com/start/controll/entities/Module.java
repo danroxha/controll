@@ -22,7 +22,8 @@ public class Module {
 
   private String name;
 
-  @OneToOne
+  @ManyToOne
+  @JsonIgnoreProperties({"modules"})
   private Stage stage;
 
   @OneToMany(mappedBy = "module")
