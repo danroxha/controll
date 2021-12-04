@@ -111,10 +111,10 @@ public class PopulateDatabase {
     if(!userService.isRepositoryEmpty())
       return;
 
-    var users = userService.createManyUsers(
-        new User(" Cordélios Oberon", "oberon-admin@sunny.com", "Lactea20NN", "ADMIN"),
-        new User("Astrogildo Alcântra", "astrogildo-scm@sunny.com", "Lactea20NN", "SCRUM_MASTER"),
-        new User("Martiano Luanova", "martiano-scm@sunny.com", "Lactea20NN", "SCRUM_MASTER")
+    userService.createManyUsers(
+      new User(" Cordélios Oberon", "oberon-admin@sunny.com", "Lactea20NN", "ADMIN"),
+      new User("Astrogildo Alcântra", "astrogildo-scm@sunny.com", "Lactea20NN", "SCRUM_MASTER"),
+      new User("Martiano Luanova", "martiano-scm@sunny.com", "Lactea20NN", "SCRUM_MASTER")
     );
   }
 
