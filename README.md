@@ -31,6 +31,9 @@ Criar um controle de Starter para GFT.
     <img  width="350" src="screenshot/04.png" />
     <img  width="350" src="screenshot/05.png" />
     <img  width="350" src="screenshot/06.png" />
+    <img  width="350" src="screenshot/07.png" />
+    <img  width="350" src="screenshot/08.png" />
+    <img  width="350" src="screenshot/09.png" />
 </p>
 
 ## :cd: Iniciar
@@ -42,19 +45,19 @@ Use o ```mvnw``` para ambiente Linux e ```mvnw.cmd``` para Windows
 ```
 
 ## Usuários:
-- Clecio Gomes
-  - login: clecio.silva@gft.com
-  - senha: Gft2021
+- Cordélios Oberon
+  - login: oberon-admin@sunny.com
+  - senha: Lactea20NN
   - tipo: ADMIN
 
-- Astrogildo Perrengue
-    - login: astrogildo-scm@example.com
-    - senha: Gft2021
+- Astrogildo Alcântra
+    - login: astrogildo-scm@sunny.com
+    - senha: Lactea20NN
     - tipo: SCRUM_MASTER
 
 - Martiano Luanova
-    - login: martiano-scm@example.com
-    - senha: Gft2021
+    - login: martiano-scm@sunny.com
+    - senha: Lactea20NN
     - tipo: SCRUM_MASTER
   
 

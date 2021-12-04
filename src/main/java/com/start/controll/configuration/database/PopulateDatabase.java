@@ -112,9 +112,9 @@ public class PopulateDatabase {
       return;
 
     var users = userService.createManyUsers(
-        new User("Clecio Gomes", "clecio.silva@gft.com", "Gft2021", "ADMIN"),
-        new User("Astrogildo Perrengue", "astrogildo-scm@example.com", "Gft2021", "SCRUM_MASTER"),
-        new User("Martiano Luanova", "martiano-scm@example.com", "Gft2021", "SCRUM_MASTER")
+        new User(" Cordélios Oberon", "oberon-admin@sunny.com", "Lactea20NN", "ADMIN"),
+        new User("Astrogildo Alcântra", "astrogildo-scm@sunny.com", "Lactea20NN", "SCRUM_MASTER"),
+        new User("Martiano Luanova", "martiano-scm@sunny.com", "Lactea20NN", "SCRUM_MASTER")
     );
   }
 
@@ -161,7 +161,7 @@ public class PopulateDatabase {
     var dotnet = technologyService.findTechnologyById(2L).get();
 
     var module = moduleService.findModuleById(1L).get();
-    var scrumMaster = userService.findUserByEmail("astrogildo-scm@example.com").get();
+    var scrumMaster = userService.findUserByEmail("astrogildo-scm@sunny.com").get();
 
     var group = groupService.createGroup(new GroupDaily(
         "Grupo 1 - Java - Desafio MVC", java, scrumMaster,  starters, module
@@ -171,7 +171,7 @@ public class PopulateDatabase {
         "Grupo 2 - .NET - Desafio MVC", dotnet, scrumMaster,  starters, module
     )).get();
 
-    var registers = group.getStarters().stream().map(starter -> new Daily(
+    var registers1 = group.getStarters().stream().map(starter -> new Daily(
         new Date(), String.format("Fazendo + %s", starter.getId()),
         String.format("Concluido + %s", starter.getId()),
         String.format("Impedimento + %s", starter.getId()),
@@ -179,9 +179,20 @@ public class PopulateDatabase {
         module)
     ).collect(Collectors.toList());
 
+    var registers2 = group.getStarters().stream().map(starter -> new Daily(
+        new Date(), String.format("Fazendo + %s", starter.getId()),
+        String.format("Concluido + %s", starter.getId()),
+        String.format("Impedimento + %s", starter.getId()),
+        Boolean.TRUE,  starter, group,
+        module)
+    ).collect(Collectors.toList());
+
+    final Integer start = 2021 - 1900;
+
     group.setDailies(
         List.of(
-            new RegisterDaily(new Date(), group, registers)
+            new RegisterDaily(new Date(start + 1, Calendar.DECEMBER, 2), group, registers1),
+            new RegisterDaily(new Date(start + 1, Calendar.DECEMBER, 3), group, registers2)
         )
     );
 
