@@ -171,8 +171,10 @@ public class PopulateDatabase {
         "Grupo 2 - .NET - Desafio MVC", dotnet, scrumMaster,  starters, module
     )).get();
 
+    final Integer start = 2021 - 1900;
+
     var registers1 = group.getStarters().stream().map(starter -> new Daily(
-        new Date(), String.format("Fazendo + %s", starter.getId()),
+        new Date(start + 1, Calendar.DECEMBER, 2), String.format("Fazendo + %s", starter.getId()),
         String.format("Concluido + %s", starter.getId()),
         String.format("Impedimento + %s", starter.getId()),
         Boolean.TRUE,  starter, group,
@@ -180,14 +182,12 @@ public class PopulateDatabase {
     ).collect(Collectors.toList());
 
     var registers2 = group.getStarters().stream().map(starter -> new Daily(
-        new Date(), String.format("Fazendo + %s", starter.getId()),
+        new Date(start + 1, Calendar.DECEMBER, 3), String.format("Fazendo + %s", starter.getId()),
         String.format("Concluido + %s", starter.getId()),
         String.format("Impedimento + %s", starter.getId()),
         Boolean.TRUE,  starter, group,
         module)
     ).collect(Collectors.toList());
-
-    final Integer start = 2021 - 1900;
 
     group.setDailies(
         List.of(

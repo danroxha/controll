@@ -33,7 +33,6 @@ Criar um controle de Starter para GFT.
     <img  width="350" src="screenshot/06.png" />
     <img  width="350" src="screenshot/07.png" />
     <img  width="350" src="screenshot/08.png" />
-    <img  width="350" src="screenshot/09.png" />
 </p>
 
 ## :cd: Iniciar
