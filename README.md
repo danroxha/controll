@@ -6,22 +6,6 @@
 - :pushpin: MariaDB 10.7
 
 
-## Proposta
-Criar um controle de Starter para GFT.
-
-### Regras Gerais
-- :heavy_check_mark: Popular banco: ou com botão ou assim que iniciar a aplicação.
-- :heavy_check_mark: Criar CRUD para todas as entidades acima
-- :heavy_check_mark: Validação de todos os campos
-- :heavy_check_mark: Login Gerente com acesso a toda a Aplicação
-- :heavy_check_mark: Login SM(Scrum Master) Acesso apenas as Dailys
-- :heavy_check_mark: Pode acrescentar entidades se achar necessário, juntar, mas não pode eliminar
-### Exceeds
-- :heavy_check_mark: Cadastro de Empregado com foto.
-- :x: Criar um relatório mostrando quais Starters tem maior nota e menor nota.
-- :heavy_check_mark: Enviar email automático para any-admin@sunny.com sempre que um SM acessar a aplicação. (Neste caso sugiro criar um email fake para não ter que colocar senha de um email seu real) (***[na branch send-email](https://github.com/dannRocha/controll/tree/send-email)***)
-
-
 ## Screenshot
 
 <p align="center">
